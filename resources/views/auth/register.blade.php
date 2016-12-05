@@ -68,8 +68,22 @@
                             </div>
                         </div>
                     </form>
+                    
+                    <hr>
+                    
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-4">
+                            <a href="auth/google" class="btn btn-primary">Sign In With Google</a>
 
-                    <a href="auth/github" class="btn btn-primary">Sign In With Github</a>
+                            <div style="margin-bottom: 15px;"></div>
+
+                            <a href="auth/facebook" class="btn btn-primary">Sign In With Facebook</a>
+
+                            <div style="margin-bottom: 15px;"></div>
+                            
+                            <a href="auth/github" class="btn btn-primary">Sign In With Github</a>
+                        </div> 
+                    </div>                   
                 </div>
             </div>
         </div>

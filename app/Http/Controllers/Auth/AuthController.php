@@ -10,37 +10,37 @@ use App\Http\Controllers\Controller;
 
 class AuthController extends Controller
 {
-    public function redirectToProvider()
+    public function redirectToProvider($provider)
     {
-        return Socialite::driver('github')->redirect(); 
+        return Socialite::driver($provider)->redirect(); 
     }
 
-    public function handleProviderCallback()
+    public function handleProviderCallback($provider)
     {
         try {
-            $user = Socialite::driver('github')->user();
+            $user = Socialite::driver($provider)->user();
         } catch (Exception $e) {
-            return redirect('auth/github');
+            return redirect('auth/'.$provider);
         }
 
-        $authUser = $this->findOrCreateUser($user);
+        $authUser = $this->findOrCreateUser($user, $provider);
 
         Auth::login($authUser, true);
 
         return redirect('home');
     }
 
-    private function findOrCreateUser($githubUser)
+    private function findOrCreateUser($user, $provider)
     {
-        if ($authUser = User::where('github_id', $githubUser->id)->first()) {
+        if ($authUser = User::where($provider.'_id', $user->id)->first()) {
             return $authUser;
         }
 
         return User::create([
-            'name' => $githubUser->name,
-            'email' => $githubUser->email,
-            'github_id' => $githubUser->id,
-            'avatar' => $githubUser->avatar
+            'avatar' => $user->avatar,
+            'name' => $user->name,
+            'email' => $user->email,
+            $provider.'_id' => $user->id,            
         ]);
     }
 }
